@@ -10,7 +10,7 @@ export const TaskDetails = () => {
 
   const handleBackButtonClick = () => {
     history.goBack();
-  }
+  };
 
   return (
     <>
