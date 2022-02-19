@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Tasks from './components/Tasks';
 import { v4 as uuidv4 } from 'uuid';
-import { BrowserRouter, Routes, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Route} from 'react-router-dom';
 import { AddTask } from './components/AddTask';
 import { Header } from './components/Header';
 import TaskDetails from './components/TaskDetails';
@@ -20,6 +21,15 @@ const App = () => {
       completed: false,
     }
   ]);
+
+  useEffect(() => {
+    
+    const fetchTasks = async () => {
+      const {data} = await axios.get('./todo.json');
+      setTasks(data);
+    };
+    fetchTasks();
+  }, []);
 
   const handleTaskClick = (taskId) => {
     const newTasks = tasks.map((task) => {
@@ -47,22 +57,19 @@ const App = () => {
   }
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <div className='container'>
-          <Header/>
-          <Route path='/' exact render={() => ( 
-              <>
-                <AddTask handleTaskAddtion={handleTaskAddtion}/>
-                <Tasks tasks={tasks} handleTaskClick={handleTaskClick} handleTaskDeletion={handleTaskDeletion}/>
-              
-              </>
-            )}
-          />
-          <Route path='/:taskTitle' exact component={TaskDetails}/>
-        </div>
-      </Routes>
-    </BrowserRouter>       
+    <Router>
+      <div className='container'>
+        <Header/>
+        <Route path='/' exact render={() => ( 
+            <>
+              <AddTask handleTaskAddtion={handleTaskAddtion}/>
+              <Tasks tasks={tasks} handleTaskClick={handleTaskClick} handleTaskDeletion={handleTaskDeletion}/>
+            </>
+          )}
+        />
+        <Route path='/:taskTitle' exact component={TaskDetails}/>
+      </div>
+    </Router>
   );
 };
 
