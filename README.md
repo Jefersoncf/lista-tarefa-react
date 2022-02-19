@@ -15,9 +15,6 @@ $ npm run start
 
 ### A aplicação será aberta na porta:3000 - acesse http://localhost:3000
 
-## Aplicação rodando:
-Para acessar no site [clique aqui!]( https://jefersoncf.github.io/lista-tarefa-react/)
-
 ## Tecnologias
 React |
 JavaScript |
